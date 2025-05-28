@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Document Analyzer</title>
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background-color: #f9f9f9;
+    }
+
+    textarea, input[type="file"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 1rem 0;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    #chat div {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #fff;
+      padding: 1rem;
+      border-left: 4px solid #3b82f6;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 AI Document Analyzer</h1>
+
+  <!-- Paste Document -->
+  <form hx-post="/paste" hx-target="#chat" hx-swap="beforeend">
+    <textarea name="text" rows="6" placeholder="Paste your document here..."></textarea>
+    <button type="submit">Submit Document</button>
+  </form>
+
+  <!-- File Upload -->
+  <form hx-post="/upload" hx-encoding="multipart/form-data" hx-target="#chat" hx-swap="beforeend">
+    <input type="file" name="file" accept=".txt" required />
+    <button type="submit">Upload .txt File</button>
+  </form>
+
+  <!-- Ask a Question -->
+  <form hx-post="/query" hx-target="#chat" hx-swap="beforeend">
+    <input type="text" name="query" placeholder="Ask about the document..." required />
+    <button type="submit">Ask AI</button>
+  </form>
+
+  <!-- Chat Log -->
+  <div id="chat"></div>
+</body>
+</html>
